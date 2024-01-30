@@ -1,18 +1,21 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+const hbs = require('hbs');
 const PORT = 8000;
 
 // used absolute path
-// console.log(path.join(__dirname, "../public"));
+// console.log(path.join(__dirname, "../templates/partials"));
 const staticPath = path.join(__dirname, "../public/css");
-const templatePath = path.join(__dirname,"../templates");
-
+const templatePath = path.join(__dirname,"../templates/views");
+const partialsPath = path.join(__dirname, "../templates/partials");
 // to set the view engine
 app.set("view engine", "hbs");
 
 // change views directory name to templates
 app.set("views", templatePath);
+hbs.registerPartials(partialsPath);
+
 
 // Built in middleware
 app.use(express.static(staticPath));
@@ -20,7 +23,7 @@ app.use(express.static(staticPath));
 
 
 // template engine route
-app.get("/",(req,res)=>{
+app.get("/move",(req,res)=>{
     res.render('index',{
         myName:"saksham",
     });
