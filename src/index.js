@@ -33,6 +33,20 @@ app.get("/about",(req,res)=>{
     res.render("about");
 });
 
+// ____404 ERROR ___
+// about ke andr jane ke bad 
+app.get("/about/*",(req,res)=>{
+    res.render("404",{
+        errorcomment:" Sorry this page  about not found "
+    });
+});
+
+// normal if enter any page not found
+app.get("*",(req,res)=>{
+    res.render("404",{
+        errorcomment:" Sorry page not found "
+    });
+});
 
 app.get('/',(req, res) =>{
     res.status(200).send("working");
