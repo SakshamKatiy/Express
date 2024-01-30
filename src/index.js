@@ -6,9 +6,13 @@ const PORT = 8000;
 // used absolute path
 // console.log(path.join(__dirname, "../public"));
 const staticPath = path.join(__dirname, "../public/css");
+const templatePath = path.join(__dirname,"../templates");
 
 // to set the view engine
 app.set("view engine", "hbs");
+
+// change views directory name to templates
+app.set("views", templatePath);
 
 // Built in middleware
 app.use(express.static(staticPath));
@@ -16,14 +20,21 @@ app.use(express.static(staticPath));
 
 
 // template engine route
-app.get("/",(res,req)=>{
-    res.render("index",{
+app.get("/",(req,res)=>{
+    res.render('index',{
         myName:"saksham",
     });
 });
+
+app.get("/about",(req,res)=>{
+    res.render("about");
+});
+
+
 app.get('/',(req, res) =>{
     res.status(200).send("working");
 });
+
 app.get('/temp',(req,res)=>{
     res.send([{
         id:1,
