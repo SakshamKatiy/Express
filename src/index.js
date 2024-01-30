@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const hbs = require('hbs');
+const http = require("http");
+const requests = require('requests');
 const PORT = 8000;
 
 // used absolute path
@@ -30,7 +32,22 @@ app.get("/move",(req,res)=>{
 });
 
 app.get("/about",(req,res)=>{
-    res.render("about");
+    // res.render("about");
+    requests(
+        ` https://api.openweathermap.org/data/2.5/weather?q=puna&units=metric&appid=3967b4f8532c27086c8d9ecedb9a1ce7`
+    )
+   
+    .on("data",(chunk)=>{
+        const objdata = JSON.parse(chunk);
+        const arrData = [objdata];
+        console.log(arrData[0].name);
+        res.write(arrData[0].name);
+    })
+    .on("end",(err)=>{
+        if(err) return console.log("connection closed due to errors ", err);
+        res.end();
+    });
+    
 });
 
 // ____404 ERROR ___
